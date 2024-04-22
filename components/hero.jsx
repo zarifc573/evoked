@@ -40,7 +40,7 @@ const Hero = () => {
            
           </button>
           <button className={`mt-[40px] flex items-center gap-2.5 px-[30px] py-[18px] rounded-[var(--md,8px)] border  border-solid  ${isDarkMode ? 'border-[#28282A] bg-white shadow-[4px_4px_0px_0px_#fff]' : 'border-white bg-[#171717] shadow-[4px_4px_0px_0px_#171717]'}`}>
-            <span className={`text-[22px] not-italic font-semibold leading-[normal] ${isDarkMode ? 'text-[#171717]' : 'text-white'}`}>Build Your Set</span>
+            <span className={`text-[22px] not-italic font-semibold leading-[normal] ${isDarkMode ? 'text-[#171717]' : 'text-white'}`}>Build Your Set & Save</span>
             {/* <Image src={arrow} alt="Arrow Right" /> */}
             <ArrowRight color={ isDarkMode ? '#171717' : 'white'} />
           </button>

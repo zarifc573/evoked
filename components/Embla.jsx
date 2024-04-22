@@ -7,7 +7,7 @@ import transform from '@/public/assets/transformed.png'
 import star from '@/public/assets/blackStar.svg'
 import Image from 'next/image';
 import { Love2, Love3 } from "@/utils/Love";
-const EmblaSlider = (props) => {
+const EmblaSlider = () => {
     const { isDarkMode, toggleDarkMode } = useDarkMode();
     const slides = [
         {link:'video' , link2:  'videoDark'},

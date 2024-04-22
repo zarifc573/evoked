@@ -8,6 +8,7 @@ import OtherBrands from './OtherBrands'
 import Accordion from './Accordion'
 import Story from './Story'
 import EmblaSlider from './Embla'
+import Pricing from './Pricing'
 
 const Main = () => {
   return (
@@ -18,6 +19,7 @@ const Main = () => {
         <Carousel />
         <EvokedBrand />
         <OtherBrands />
+        <Pricing/>
         <EmblaSlider/>
         <Story/>
         <Accordion/>

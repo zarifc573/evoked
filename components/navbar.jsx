@@ -23,7 +23,9 @@ const Navbar = () => {
      
     </button>
                   <button className='flex justify-center items-center gap-2.5 px-5 py-[18px] dark:bg-white rounded-[var(--md,8px)] dark:border-[color:var(--Brand,#28282A)] shadow-[2px_2px_0px_0px_#FFF] border-[1.5px] border-solid dark:text-[color:var(--Brand,#28282A)] text-base not-italic font-semibold leading-[normal] uppercase'>SHOP NOW</button>
-              
+                  {/* <button className="flex justify-center items-center gap-10 ">
+                      <span className="flex justify-center items-center gap-2.5 px-5 py-[18px] rounded-[var(--md,8px)] border-[1.5px] border-solid border-white text-white text-base not-italic font-semibold leading-[normal] uppercase shadow-[4px_4px_0px_0px_#FFF]">shop now</span>
+              </button> */}
                  
               </div>
           </div>

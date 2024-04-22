@@ -3,8 +3,8 @@
 import { useDarkMode } from "@/utils/DarkModeContext";
 import kitjack from '@/public/assets/kitjack.png'
 import Image from 'next/image';
-import DownArrow from "@/utils/Helpers";
 import ArrowRight from "@/utils/ArrowRight";
+import { DownArrow } from "@/utils/Helpers";
 const Story = () => {
     const { isDarkMode, toggleDarkMode } = useDarkMode();
   return (
