@@ -4,7 +4,7 @@ import { Box1, Box2, DownArrow2, Plus, Minus, DownArrow1, Star12, Prev, Next, Dr
 import Image from "next/image";
 import circle from "@/public/assets/circle.svg";
 import checkedCircle from "@/public/assets/checkedCircle.svg";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 // Import Swiper styles
@@ -188,6 +188,7 @@ const Pricing = () => {
     if (selectedImages.length < maxLimit) {
         // Add the new image
         setSelectedImages(prevImages => [...prevImages, perfume]);
+        
     } else {
         // Display an alert if the maximum limit of images is reached
         alert('You have reached the maximum limit of Perfumes.');
@@ -509,34 +510,57 @@ useEffect(() => {
     root.style.setProperty('--swiper-button-color', '#171717');
   }
 }, [isDarkMode]);
+const [scrollY, setScrollY] = useState(0);
+const [show,setShow ] = useState(false);
+
+const onScroll = useCallback(event => {
+  const { pageYOffset, scrollY } = window;
+  console.log("yOffset", pageYOffset, "scrollY", scrollY);
+  setScrollY(window.pageYOffset);
+  if (scrollY > 6300) {
+    setShow(true);
+  }
+  if (scrollY < 6300) {
+    setShow(false);
+  }
+}, []);
+
+useEffect(() => {
+  //add eventlistener to window
+  window.addEventListener("scroll", onScroll, { passive: true });
+  // remove event on unmount to prevent a memory leak with the cleanup
+  return () => {
+     window.removeEventListener("scroll", onScroll, { passive: true });
+    }
+  }, []);
 
   return (
     <section>
       <div className={`${isDarkMode ? 'bg-primary' : 'bg-white'}`}>
       <div
-        className={`flex justify-between pt-[100px] ${
+        className={`flex justify-between lg:pt-[100px] pt-[80px] ${
           isDarkMode ? "bg-primary" : "bg-white"
         }`}
       >
-        <Box1 color={isDarkMode ? "white" : "#454547"} />
-        <div className="max-w-container mx-auto mt-[120px]">
+        <Box1 className={`lg:block hidden`} color={isDarkMode ? "white" : "#454547"} />
+        <div className="lg:max-w-container w-[90%] mx-auto lg:mt-[120px]">
           <div className="flex flex-col text-center">
             <h2
-              className={`text-5xl mb-[25px] not-italic font-bold leading-[normal] uppercase ${
+              className={`text-[22px] lg:text-5xl lg:mb-[25px] mb-[15px] not-italic font-bold leading-[130%] lg:leading-[normal] uppercase ${
                 isDarkMode ? "text-white" : "text-[color:var(--Brand,#28282A)] "
               }`}
             >
               Select how many BOTTLES
             </h2>
             <span
-              className={`text-center text-2xl not-italic font-medium leading-[160%] ${
+              className={`text-center text-[14px] lg:text-2xl not-italic font-medium leading-[160%] ${
                 isDarkMode ? "text-white" : "text-[color:var(--Brand,#28282A)] "
               }`}
             >
               Buy More, Save More. Subscribe to save most.
             </span>
             <span
-              className={`text-2xl italic font-light leading-[160%] ${
+              className={`text-[14px] lg:text-2xl italic font-light leading-[160%] ${
                 isDarkMode ? "text-white" : "text-[color:var(--Brand,#28282A)] "
               }`}
             >
@@ -545,7 +569,7 @@ useEffect(() => {
             </span>
             {/* Button */}
             <div
-              className={`mt-[80px] mx-auto inline-flex gap-2.5 px-2.5 py-2 rounded-[var(--md,8px)] border  border-solid ${
+              className={`lg:mt-[80px] mt-[30px] mx-auto inline-flex gap-2.5 lg:px-2.5 px-2 py-2 rounded-[var(--md,8px)] border  border-solid ${
                 isDarkMode
                   ? "border-white"
                   : "border-[color:var(--black,#171717)]"
@@ -553,28 +577,29 @@ useEffect(() => {
             >
               <button
                 onClick={handleClick1}
-                className={`flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--md,8px)]  text-lg not-italic font-normal leading-[normal]   ${
-                  show1 && `${isDarkMode ? 'bg-white text-[#28282A]' : 'bg-primary text-white'}`
-                } ${show2 && `bg-transparent  ${isDarkMode ? 'text-[#454547]' : 'text-[#28282a]'}`} `}
+                className={`flex justify-center items-center px-2.5 lg:px-5 py-2.5 rounded-[var(--md,8px)]  text-[14px] lg:text-lg not-italic font-normal leading-[normal]   ${
+                  show1 && `${isDarkMode ? 'bg-white text-[#454547]' : 'bg-primary text-white'}`
+                } ${show2 && `bg-transparent  ${isDarkMode ? 'text-[#454547]' : 'text-[#28282A66]'}`} `}
               >
                 Subscribe & Save
               </button>
               <button
                 onClick={handleClick2}
-                className={` flex justify-center rounded-[var(--md,8px)] items-center gap-2.5 px-5 py-2.5 text-lg not-italic leading-[normal] font-normal   ${
-                  show2 && `${isDarkMode ? 'bg-white text-[#28282A]' : 'bg-primary text-white'}`
-                } ${show1 && `bg-transparent  ${isDarkMode ? 'text-[#454547]' : 'text-[#28282a]'}`}`}
+                className={` flex justify-center rounded-[var(--md,8px)] items-center px-2.5 lg:px-5 py-2.5 text-[14px] lg:text-lg not-italic leading-[normal] font-normal   ${
+                  show2 && `${isDarkMode ? 'bg-white text-[#454547]' : 'bg-primary text-white'}`
+                } ${show1 && `bg-transparent  ${isDarkMode ? 'text-[#454547]' : 'text-[#28282A66]'}`}`}
               >
                 One Time Purchase
               </button>
             </div>
 
-                      <div className="flex items-start gap-[30px] self-stretch mt-[50px]">
+                      <div className="lg:flex items-start gap-[30px] self-stretch lg:mt-[50px]">
               {
                 show1 && 
                 (
                   data.map(({ name, rate, discount, shipping, includes, firstPoint, firstPoint50, lastPoint, spray, rate50,discount50, trend, trendName }, index) => (
-                    <div className="">
+                    <div onClick={() => handleOptionPlanChange(name, index)} className="lg:block hidden">
+                      
                     <div key={index} className={`flex flex-col items-start px-5 py-[30px] ${trend ? 'rounded-t-[var(--md,8px)] ' : 'rounded-[var(--md,8px)] '} border   border-solid  ${selectedPlan === name ? `${isDarkMode ? 'bg-white border-white' : 'border-white bg-primary'}` : `${isDarkMode ? 'bg-[#454547] border-white' : ' bg-white border-[color:var(--black,#171717)]'}`} `}>
                       <div className="flex items-center gap-5">
                         <h6 className={` text-[38px] not-italic font-semibold leading-[normal] ${selectedPlan === name ? `${isDarkMode ? ' text-primary' : 'text-white'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{name}</h6>
@@ -630,7 +655,7 @@ useEffect(() => {
                             }
                         </div>
                       </div>
-                      <span  className={`text-[28px] not-italic font-normal leading-[normal] mt-[25px] ${selectedPlan === name ? `${isDarkMode ? 'text-primary' : 'text-white'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}><span className={` text-[22px] not-italic font-normal leading-[normal] line-through ${selectedPlan === name ? `${isDarkMode ? 'text-[#171717CC]' : 'text-[rgba(255,255,255,0.80)]'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[white]'}`}`}>{selectedOptions[index] === "50ml" ? discount50 : discount}</span>{selectedOptions[index] === "50ml" ? rate50 : rate}</span>
+                      <span  className={`text-[28px] not-italic font-normal leading-[normal] mt-[25px] ${selectedPlan === name ? `${isDarkMode ? 'text-primary' : 'text-white'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}><span className={` text-[22px] not-italic font-normal leading-[normal] line-through ${selectedPlan === name ? `${isDarkMode ? 'text-[#171717CC]' : 'text-[rgba(255,255,255,0.80)]'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#171717CC]'}`}`}>{selectedOptions[index] === "50ml" ? discount50 : discount}</span>{selectedOptions[index] === "50ml" ? rate50 : rate}</span>
                       {/* <span className={`flex mt-[10px] justify-center items-center gap-2.5 px-2.5 py-[5px] rounded-[var(--sm,4px)] border border-solid  text-sm not-italic font-normal leading-[120%] ${selectedPlan === name ? 'text-[#FFFFFFB2] border-[#FFFFFFB2] ' : 'text-[color:var(--brand-70,rgba(40,40,42,0.70))] border-[color:var(--brand-70,rgba(40,40,42,0.70))]'}`}>{shipping}</span> */}
                       <span className={`mt-[30px] text-xl not-italic font-normal leading-[normal] ${selectedPlan === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{includes}</span>
                       <span className={` mt-[15px] text-base not-italic font-normal leading-[normal] ${selectedPlan === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{selectedOptions[index] === "50ml" ? firstPoint50 : firstPoint}</span>
@@ -649,23 +674,129 @@ useEffect(() => {
                     </div>
                   ))
                 )
-              }
+                }
+                {/* Mobile device */}
+                {
+                  show1 &&
+                  <div className={`lg:hidden block w-[100%]`}>
+                  <div className={`inline-flex justify-center items-center gap-x-[20px] mt-[30px] mb-[20px] py-[10px] border-b border-solid ${isDarkMode ? 'border-white' : 'border-primary'}`}>
+                  { data.map(({ name }, index) => (
+                     
+                    <div onClick={() => handleOptionPlanChange(name, index)} className={` text-center text-base not-italic font-normal leading-[normal] ${selectedPlan === name ? `${isDarkMode ? 'text-white' : 'text-primary'}` : `${isDarkMode ? 'text-[color:var(--brand2,#454547)]' : 'text-gray-500'}`}`}>
+                      {name}
+                      </div>
+                     
+                
+                 
+                  ))}
+                    </div>
+                {
+                show1 && 
+                (
+                  data.map(({ name, rate, discount, shipping, includes, firstPoint, firstPoint50, lastPoint, spray, rate50,discount50, trend, trendName }, index) => (
+                    
+                    
+                      
+                        selectedPlan === name &&
+                        <div onClick={() => handleOptionPlanChange(name, index)} className="">
+                          {
+                            trend && (
+                              <div className={`flex justify-between items-center self-stretch lg:p-5 py-[10px] px-[20px] rounded-t-[8px] border-t border-r border-l  border-solid ${isDarkMode ? 'border-white ' : 'border-[color:var(--black,#171717)] '} `}>
+                                <span className={` text-center mx-auto text-[16px] lg:text-3xl not-italic font-bold leading-[normal] ${isDarkMode ? 'text-white ' : 'text-[color:var(--black,#171717)]'}`}>
+                                {trendName}
+                                </span> 
+                              </div>
+                            )
+                          }
+                        <div key={index} className={`flex flex-col items-start lg:px-5 lg:py-[30px]  p-[10px] rounded-b-[8px]  border border-solid ${selectedPlan === '1 Perfume' && 'rounded-[8px]'}  ${selectedPlan === name ? `${isDarkMode ? 'bg-white border-white' : 'border-primary bg-primary'}` : `${isDarkMode ? 'bg-[#454547] border-white' : ' bg-white border-[color:var(--black,#171717)]'}`} `}>
+                          <div className="flex items-center justify-between w-full">
+                            {/* Select  */}
+                            <span  className={`lg:text-[28px] text-[20px] not-italic font-normal leading-[normal]  ${selectedPlan === name ? `${isDarkMode ? 'text-primary' : 'text-white'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}><span className={` lg:text-[22px] text-[12px] not-italic font-normal leading-[normal] line-through ${selectedPlan === name ? `${isDarkMode ? 'text-[#171717CC]' : 'text-[rgba(255,255,255,0.80)]'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#171717CC]'}`}`}>{selectedOptions[index] === "50ml" ? discount50 : discount}</span>{selectedOptions[index] === "50ml" ? rate50 : rate}</span>
+                           
+                            {/* CheckMark */}
+                            <div className="flex justify-end ml-auto lg:w-auto lg:h-auto w-[25px] h-[25px]">
+                                
+                                {
+                                  isDarkMode ? 
+                                    <Image onClick={() => handleOptionPlanChange(name, index)} src={selectedPlan === name ? darkBlack : darkGrey} alt="Circle" />
+                                    : <Image onClick={() => handleOptionPlanChange(name, index)} src={selectedPlan === name ? checkedCircle : circle} alt="Circle" />
+                                }
+                            </div>
+                          </div>
+                          <div className="relative mt-[10px]" ref={dropdownRefs.current[index]}>
+                              <span className="rounded-md shadow-sm">
+                                <button
+                                  onClick={() => toggleDropdown(index)}
+                                  type="button"
+                                  className={`flex items-center gap-2.5 lg:px-2.5 lg:py-[5px] p-1 rounded-[var(--sm,4px)] border  border-solid  lg:text-xl text-[12px] not-italic font-normal leading-[normal] ${selectedPlan === name ? `${isDarkMode ? 'text-primary border-primary' : 'text-white border-white'}` : `${isDarkMode ? 'text-white border-white' : 'text-[color:var(--Brand,#28282A)] border-[color:var(--Brand,#28282A)]'}`}`}
+                                  id={`options-menu-${index}`}
+                                  aria-haspopup="true"
+                                  aria-expanded={isOpen[index] ? "true" : "false"}
+                                >
+                                  {selectedOptions[index]}
+                                  <DownArrow2 color={selectedPlan === name ? `${isDarkMode ? '#171717' : 'white'}` : `${isDarkMode ? 'white' : '#28282A'}`} />
+                                </button>
+                              </span>
+                  
+                              {isOpen[index] && (
+                                <div
+                                  className={`origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg  ring-1  ring-opacity-5 ${selectedPlan === name ? `${isDarkMode ? 'ring-white bg-primary' : 'ring-black bg-white'}` : 'ring-black bg-white'}`}
+                                  role="menu"
+                                  aria-orientation="vertical"
+                                  aria-labelledby={`options-menu-${index}`}
+                                >
+                                  <div className="py-1" role="none">
+                                    <button
+                                      onClick={() => handleOptionChange("100ml", index)}
+                                      className={`${selectedOptions[index] === "100ml" ? "" : ""} block w-full text-left px-4 py-2 text-sm  ${selectedPlan === name ? `${isDarkMode ? 'text-white' :'text-primary hover:bg-gray-100 hover:text-gray-900'}` : `'text-gray-700 hover:bg-gray-100 hover:text-gray-900'`}`}
+                                      role="menuitem"
+                                    >
+                                      100ml
+                                    </button>
+                                    <button
+                                      onClick={() => handleOptionChange("50ml", index)}
+                                      className={`${selectedOptions[index] === "50ml" ? `${isDarkMode ? 'bg-transparent' :'bg-gray-100'}` : ""} block w-full text-left px-4 py-2 text-sm ${selectedPlan === name ? `${isDarkMode ? 'text-white' :'text-primary hover:bg-gray-100 hover:text-gray-900'}` : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'}`}
+                                      role="menuitem"
+                                    >
+                                      50ml
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          {/* <span className={`flex mt-[10px] justify-center items-center gap-2.5 px-2.5 py-[5px] rounded-[var(--sm,4px)] border border-solid  text-sm not-italic font-normal leading-[120%] ${selectedPlan === name ? 'text-[#FFFFFFB2] border-[#FFFFFFB2] ' : 'text-[color:var(--brand-70,rgba(40,40,42,0.70))] border-[color:var(--brand-70,rgba(40,40,42,0.70))]'}`}>{shipping}</span> */}
+                          <span className={`mt-[20px] text-[16px] lg:text-xl not-italic font-normal leading-[normal] ${selectedPlan === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{includes}</span>
+                          <span className={` mt-[15px] text-[14px] lg:text-base not-italic font-normal leading-[normal] ${selectedPlan === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{selectedOptions[index] === "50ml" ? firstPoint50 : firstPoint}</span>
+                          <span className={` mt-[10px] text-[14px] lg:text-base not-italic font-normal leading-[normal] ${selectedPlan === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{lastPoint}</span>
+                          <span className={` text-[16px] lg:text-xl not-italic font-light leading-[normal] mt-[30px] ml-auto ${selectedPlan === name ? `${isDarkMode ? 'text-[#28282ACC]' : 'text-[#FFFFFFCC]'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[color:var(--brand-70,rgba(40,40,42,0.70))]'}`}`}>{spray}</span>
+                          </div>
+                          
+                          </div>
+                    
+                     
+                  ))
+                )
+                  }
+                 </div>
+                }
+              
+                  
               {
                 show2 && 
                 (
                   data2.map(({ name, includes }, index) => (
-                    <div className="mx-auto">
+                    <div className="mx-auto lg:w-auto w-full lg:mt-0 mt-[30px]">
                     <div key={index} className={`flex flex-col items-start rounded-[8px] px-5 py-[30px] border border-[color:var(--black,#171717)] border-solid  ${selectedPlan2 === name ? `${isDarkMode ? 'bg-white border-white' : 'border-white bg-primary'}` : `${isDarkMode ? 'bg-[#454547] border-white' : ' bg-white border-[color:var(--black,#171717)]'}`} `}>
-                        <div className="flex justify-between items-center gap-5">
+                        <div className="flex justify-between items-center lg:gap-5 gap-3">
                           
-                        <h6 className={` text-[38px] not-italic font-semibold leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-[primary]' : 'text-white'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[white]'}`}`}>{name}</h6>
+                        <h6 className={` text-[26px] lg:text-[38px] not-italic font-semibold leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-[primary]' : 'text-white'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[white]'}`}`}>{name}</h6>
                         {/* Select  */}
-                        <div className="relative" ref={dropdownRefs.current[index]}>
+                        <div className="relative lg:ml-0 ml-[20px]" ref={dropdownRefs.current[index]}>
                           <span className="rounded-md shadow-sm">
                             <button
                               onClick={() => toggleDropdownOneTime(index)}
                               type="button"
-                              className={`flex items-center gap-2.5 px-2.5 py-[5px] rounded-[var(--sm,4px)] border  border-solid  text-xl not-italic font-normal leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary border-primary' : 'text-white border-white'}` : `${isDarkMode ? 'text-white border-white' : 'text-[color:var(--Brand,#28282A)] border-[color:var(--Brand,#28282A)]'}`}`}
+                              className={`flex items-center lg:gap-2.5 gap-1 lg:px-2.5 px-[5px] py-[5px] rounded-[var(--sm,4px)] border  border-solid text-[12px] lg:text-xl not-italic font-normal leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary border-primary' : 'text-white border-white'}` : `${isDarkMode ? 'text-white border-white' : 'text-[color:var(--Brand,#28282A)] border-[color:var(--Brand,#28282A)]'}`}`}
                               id={`options-menu-${index}`}
                               aria-haspopup="true"
                               aria-expanded={isOpen[index] ? "true" : "false"}
@@ -702,7 +833,7 @@ useEffect(() => {
                           )}
                         </div>
                         {/* CheckMark */}
-                          <div className="ml-[270px]">
+                          <div className="lg:ml-[270px] lg:block hidden">
                           {
                               isDarkMode ? 
                                 <Image onClick={() => handleOptionPlanChange2(name, index)} src={selectedPlan2 === name ? darkBlack : darkGrey} alt="Circle" />
@@ -711,9 +842,9 @@ useEffect(() => {
                          
                         </div>
                       </div>
-                        <div className="flex gap-x-[20px] mt-[30px] mb-[20px]">
+                        <div className="flex items-center gap-x-[20px] mt-[30px] mb-[20px]">
                         <div className="">
-                        <span  className={`text-[color:var(--Brand,#28282A)] text-[28px] not-italic font-normal leading-[normal] mt-[25px] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary' : 'text-white'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[white]'}`}`}><span className={` text-[22px] not-italic font-normal leading-[normal] line-through ${selectedPlan2 === name ? `${isDarkMode ? 'text-[#171717CC]' : 'text-[rgba(255,255,255,0.80)]'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[white]'}`}`}>{selectedOptions2[index] === "50ml" ? selector ? discount50 : null : selector ? discount : null}</span> {selectedOptions2[index] === "50ml" ? rate50 : rate && rate}</span>
+                        <span  className={`text-[color:var(--Brand,#28282A)] text-[22px] lg:text-[28px] not-italic font-normal leading-[normal] mt-[25px] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary' : 'text-white'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[white]'}`}`}><span className={` text-[14px] lg:text-[22px] not-italic font-normal leading-[normal] line-through ${selectedPlan2 === name ? `${isDarkMode ? 'text-[#171717CC]' : 'text-[rgba(255,255,255,0.80)]'}` : `${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[white]'}`}`}>{selectedOptions2[index] === "50ml" ? selector ? discount50 : null : selector ? discount : null}</span> {selectedOptions2[index] === "50ml" ? rate50 : rate && rate}</span>
                         </div>
                           {/* Increment Decrement Buttons */}
                           {
@@ -745,14 +876,14 @@ useEffect(() => {
                        
                         </div>
                         <div className="flex items-center mt-[10px] cursor-default">
-                          <span className={`flex justify-center items-center gap-2.5 px-2.5 py-[5px] rounded-[var(--sm,4px)] border border-solid  text-sm not-italic font-normal leading-[120%]  ${shipping === 'You’ve unlocked max savings of £80! 🎉' ? `${isDarkMode ? 'bg-primary text-white' : 'bg-white text-primary'}` : `${isDarkMode ? 'border-primary text-primary' : 'border-white text-white'}`}`}>{shipping}</span>
+                          <span className={`flex justify-center items-center gap-2.5 px-2.5 py-[5px] rounded-[var(--sm,4px)] border border-solid text-[12px] lg:text-sm not-italic font-normal leading-[120%]  ${shipping === 'You’ve unlocked max savings of £80! 🎉' ? `${isDarkMode ? 'bg-primary text-white' : 'bg-white text-primary'}` : `${isDarkMode ? 'border-primary text-primary' : 'border-white text-white'}`}`}>{shipping}</span>
                           {/* <div className="w-[92px] h-[1px] bg-white"></div>
                       <span className={`flex justify-center items-center gap-2.5 px-2.5 py-[5px] rounded-[var(--sm,4px)] border border-solid  text-sm not-italic font-normal leading-[120%] ${selectedPlan === name ? 'text-[#FFFFFFB2] border-[#FFFFFFB2] ' : 'text-[color:var(--brand-70,rgba(40,40,42,0.70))] border-[color:var(--brand-70,rgba(40,40,42,0.70))]'}`}>{shippingProgress}</span> */}
                       </div>
-                      <span className={`mt-[30px] text-xl not-italic font-normal leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{includes}</span>
-                      <span className={` mt-[15px] text-base not-italic font-normal leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{selectedOptions2[index] === "100ml" ? count + ' ' + firstPoint : count + ' ' + firstPoint50}</span>
-                      <span className={` mt-[10px] text-base not-italic font-normal leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{count + ' ' + lastPoint}</span>
-                      <span className={` text-xl not-italic font-light leading-[normal] mt-[30px] ml-auto ${selectedPlan2 === name && `${isDarkMode ? 'text-[color:var(--brand-70,rgba(40,40,42,0.70))]' : 'text-[#FFFFFFCC]'}`}`}>{spray}</span>
+                      <span className={`mt-[30px] text-[16px] lg:text-xl not-italic font-normal leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{includes}</span>
+                      <span className={` mt-[15px] text-[14px]  lg:text-base not-italic font-normal leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{selectedOptions2[index] === "100ml" ? count + ' ' + firstPoint : count + ' ' + firstPoint50}</span>
+                      <span className={` mt-[10px] text-[14px]  lg:text-base not-italic font-normal leading-[normal] ${selectedPlan2 === name ? `${isDarkMode ? 'text-primary' : 'text-[white]'}` : `${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}`}>{count + ' ' + lastPoint}</span>
+                      <span className={`text-[16px] lg:text-xl not-italic font-light leading-[normal] mt-[30px] ml-auto ${selectedPlan2 === name && `${isDarkMode ? 'text-[color:var(--brand-70,rgba(40,40,42,0.70))]' : 'text-[#FFFFFFCC]'}`}`}>{spray}</span>
                       </div>
                    
                     </div>
@@ -762,65 +893,99 @@ useEffect(() => {
             </div>
           </div>
         </div>
-        <Box2 color={isDarkMode ? "white" : "#28282A"} />
+        <Box2 className={`lg:block hidden`} color={isDarkMode ? "white" : "#28282A"} />
       </div>
       {/* Second */}
 <div className={`${isDarkMode ? 'bg-primary' : 'bg-white'}`}>
-      <div className="max-w-container mx-auto text-center mt-[60px]">
-        <div className="flex justify-center ">
-        <DownArrow1 color={isDarkMode ? 'white' : '#171717'}/>
+      <div className="lg:max-w-container w-[90%] mx-auto text-center lg:mt-[60px] mt-[30px]">
+        <div className="flex justify-center">
+        <DownArrow1 className={`lg:h-auto h-[55px] stroke-[2px] ${isDarkMode ? 'stroke-white' : 'stroke-primary'}`} color={isDarkMode ? 'white' : '#171717'}/>
         </div>
-        <h2 className={`${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} mt-[58px] text-5xl not-italic font-bold leading-[normal] uppercase`}>PICK YOUR SCENTS</h2>
-        <h5 className={`${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} mt-[24px] text-2xl not-italic font-normal leading-[normal]`}>Meet Evoked’s Collection 1. Confidence, now bottled with iconic designer-like scents.</h5>
+        <h2 className={`${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} lg:mt-[58px] mt-[30px] text-[22px] lg:text-5xl not-italic font-bold leading-[normal] uppercase`}>PICK YOUR SCENTS</h2>
+        <h5 className={`${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} lg:mt-[24px] mt-[15px] text-[14px] lg:text-2xl not-italic font-normal leading-[150%] lg:leading-[normal] `}>Collection 1 by Evoked. <br className="lg:hidden block" /> Confidence,now bottled with iconic scents.</h5>
         </div>
-        <div className={` mt-[70px] border-t-[1px] ${isDarkMode ? 'border-white bg-primary' : 'border-primary bg-[#F4F4F4]'} border-opacity-[0.4] border-b-[1px]`}>
-        <div className={`max-w-container mx-auto  py-[50px]`}>
+        <div className={` lg:mt-[70px] mt-[30px] lg:border-t-[1px] ${isDarkMode ? 'border-white bg-primary' : 'border-primary bg-[#F4F4F4]'} border-opacity-[0.4] lg:border-b-[1px]`}>
+        <div className={`lg:max-w-container w-[100%] mx-auto  lg:py-[50px]`}>
             <div>
-            </div>
+              </div>
+              <div className="lg:block flex justify-center">
             <span className={`gap-x-[10px] inline-flex items-start gap-2.5 px-2.5 py-2 rounded-[var(--lg,12px)] border ${isDarkMode ? 'border-white' : 'border-[color:var(--black,#171717)]'} border-solid`}>
       <button
         onClick={() => handleButtonClick(1)}
-        className={`${selectedButton === 1 ? ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)]  text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-primary bg-white' : 'bg-[#171717] text-white'}` : ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)]  text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white bg-transparent' : 'bg-transparent text-[#28282A]'}`}`}
+        className={`${selectedButton === 1 ? ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)] text-[16px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-primary bg-white' : 'bg-[#171717] text-white'}` : ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)] text-[16px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white bg-transparent' : 'bg-transparent text-[#28282A]'}`}`}
       >
         Men
               </button>
              
       <button
         onClick={() => handleButtonClick(2)}
-        className={`${selectedButton === 2 ? ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)]  text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-primary bg-white' : 'bg-[#171717] text-white'}` : ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)]  text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white bg-transparent' : 'bg-transparent text-[#28282A]'}`}`}
+        className={`${selectedButton === 2 ? ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)] text-[16px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-primary bg-white' : 'bg-[#171717] text-white'}` : ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)] text-[16px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white bg-transparent' : 'bg-transparent text-[#28282A]'}`}`}
       >
         WOMEN
       </button>
       <button
         onClick={() => handleButtonClick(3)}
-        className={`${selectedButton === 3 ? ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)]  text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-primary bg-white' : 'bg-[#171717] text-white'}` : ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)]  text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white bg-transparent' : 'bg-transparent text-[#28282A]'}`}`}
+        className={`${selectedButton === 3 ? ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)] text-[16px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-primary bg-white' : 'bg-[#171717] text-white'}` : ` flex justify-center items-center gap-2.5 px-5 py-2.5 rounded-[var(--lg,12px)] text-[16px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white bg-transparent' : 'bg-transparent text-[#28282A]'}`}`}
       >
         UNISEX
               </button>
             </span>
-            
-            <div className="">
+            </div>
+            <div className="lg:w-auto w-[80%] lg:mx-0 mx-auto">
               {/* Content 1 */}
               {
                 selectedButton === 1 | 2 | 3 && (
-                  <div className="mt-[80px]">
+                  <div className="lg:mt-[80px] mt-[20px]">
                      <Swiper
                       navigation={{
                         prevEl: '.swiper-button-prev1',
                         nextEl: '.swiper-button-next1',
                       }}
-        slidesPerView={5}
-        spaceBetween={20}
+        spaceBetween={0}
+        slidesPerView= 'auto'
             loop={true}
             allowTouchMove={true}
             centeredSlides={true}
             scrollbar={{ draggable: true }}
             mousewheel={true}
-        className="mySwiper"
+        className="w-full h-full"
         modules={[Navigation]}
         pagination={{ clickable: true }}
         onSlideChange={(swiper) => handleSlideChange(swiper)}
-        initialSlide={currentIndex} 
+                        initialSlide={currentIndex}
+                        breakpoints={{
+                        //   320: {
+                        //     slidesPerView: 2,
+                        //     spaceBetween: 20,
+                        //     loop:true,
+                        //     allowTouchMove:true,
+                        //   centeredSlides: true,
+                        //   scrollbar:{ draggable: true },
+                        //     modules: [Navigation],
+                        //     navigation:{
+                        //       prevEl: '.swiper-button-prev1',
+                        //       nextEl: '.swiper-button-next1',
+                        //     }
+                        // },
+                          640: {
+                            slidesPerView: 3,
+                            spaceBetween: 20,
+                            
+                        },
+                        
+                          768: {
+                            slidesPerView: 3,
+                            spaceBetween: 20,
+                          },
+                          1024: {
+                            slidesPerView: 4,
+                            spaceBetween: 20,
+                          },
+                          1920: {
+                            slidesPerView: 5,
+                            spaceBetween: 20,
+                          },
+                        }}                
         >
                       {Links.map((item, index) => {
                         
@@ -836,11 +1001,11 @@ useEffect(() => {
                         }
                      
                       return (
-              <SwiperSlide key={selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3} className={index === currentIndex  ? 'focus' : 'blur relative z-[-10]'}>
-                <div className={`flex flex-col select-none items-center gap-[25px]  rounded-[var(--md,8px)]  ${index === currentIndex ? `border ${isDarkMode ? 'border-white' : 'border-[color:var(--black,#171717)]'} border-solid px-20 py-10` : 'px-[30px] py-[20px]'}`}>
-                  <Image src={selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3} alt="Perfume" className={index === currentIndex ? 'w-auto h-auto' : 'w-[50%] h-[50%]'} />
-                  <div className="flex flex-col justify-center">
-                  <span className={`text-center ${isDarkMode ? 'text-white' : 'text-[#28282A]'} text-[28px] not-italic font-medium leading-[120%]`}>Scent 3</span>
+              <SwiperSlide key={selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3} className={`lg:w-full w-[70%]  ${index === currentIndex  ? 'focus' : 'blur relative z-[-10]'}`}>
+                <div className={`flex relative flex-col select-none items-center gap-[25px]  rounded-[var(--md,8px)]  ${index === currentIndex ? `border ${isDarkMode ? 'border-white' : 'border-[color:var(--black,#171717)]'} border-solid px-20 py-10` : 'px-[30px] py-[20px]'}`}>
+                  <Image src={selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3} alt="Perfume" className={index === currentIndex ? 'lg:w-[100%] lg:h-[100%] w-[90%] h-full' : 'w-[50%] h-[50%]'} />
+                  <div className="flex flex-col justify-center ">
+                  <span className={`text-center text-[20px] ${isDarkMode ? 'text-white' : 'text-[#28282A]'} lg:text-[28px] not-italic font-medium leading-[120%]`}>Scent 3</span>
                     <div className="flex items-end mt-[10px] justify-center">
                       <div className="flex items-center ">
                       <Star12 color={isDarkMode ? 'white' : '#28282A'} />
@@ -852,37 +1017,37 @@ useEffect(() => {
                       <span className={` text-center ml-[5px] text-base leading-[75%] not-italic font-medium ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)] '}`}>(123)</span>
                     </div>
                     <span className=" w-[300px] mx-auto mt-[25px] flex flex-col justify-center">
-                      <h6 className={` text-center text-lg not-italic font-normal leading-[120%] ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[color:var(--Brand,#28282A)]'}`}>
+                      <h6 className={` text-center text-[14px] lg:text-lg not-italic font-normal leading-[120%] ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[color:var(--Brand,#28282A)]'}`}>
                       Smells Like Dior Sauvage
                       </h6>
                     <div className={`inline-flex mt-[10px] mx-auto flex-col justify-center items-center  px-2.5 py-[5px] rounded-[var(--sm,4px)] border  border-solid ${isDarkMode ? 'border-[#454547] text-[#FFFFFFCC]' : 'text-[#28282A] border-[color:var(--Brand,#28282A)]'}`}>
-                      <button className={`flex w-48 justify-between items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-center text-lg not-italic leading-[120%] ${dropdownOpen1 ? 'font-bold' : 'font-normal'} `} onClick={toggleDropdown1}>Ingredients <Dropdown color={isDarkMode ? 'white' : '#28282A'} /> </button>
+                      <button className={`flex w-48 justify-between items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-center text-[14px] lg:text-lg not-italic leading-[120%] ${dropdownOpen1 ? 'font-bold' : 'font-normal'} `} onClick={toggleDropdown1}>Ingredients <Dropdown color={isDarkMode ? 'white' : '#28282A'} /> </button>
         {index === currentIndex ? dropdownOpen1 && (
-          <div className={`flex w-48 mt-[10px] items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-start`}>
+          <div className={`flex w-48 lg:text-[14px] text-[12px] mt-[10px] items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-start`}>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo, alias sit eum delectus itaque minima distinctio facere enim cumque accusamus!
 </div>
                       ) : dropdownOpen1 && (
-                        <div className={`hidden w-48 mt-[10px] items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-start`}>
+                        <div className={`hidden w-48 lg:text-[14px] text-[12px] mt-[10px] items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-start`}>
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo, alias sit eum delectus itaque minima distinctio facere enim cumque accusamus!
               </div>
                                     )}
                       <div className="w-[192px] h-[1px] bg-[#28282A] mx-auto my-[10px] "></div>
-        <button className={`flex w-48 justify-between items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'}text-center text-lg not-italic leading-[120%] ${dropdownOpen2 ? 'font-bold' : 'font-normal'}`} onClick={toggleDropdown2}>Notes <Dropdown color={isDarkMode ? 'white' : '#28282A'} /></button>
+        <button className={`flex w-48 justify-between items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-center text-[14px] lg:text-lg not-italic leading-[120%] ${dropdownOpen2 ? 'font-bold' : 'font-normal'}`} onClick={toggleDropdown2}>Notes <Dropdown color={isDarkMode ? 'white' : '#28282A'} /></button>
         {index === currentIndex ? dropdownOpen2 && (
-                        <div className={`flex w-48 mt-[10px] items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-start`}>
+                        <div className={`flex w-48 lg:text-[14px] text-[12px] mt-[10px] items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-start`}>
                           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo, alias sit eum delectus itaque minima distinctio facere enim cumque accusamus!
           </div>) : dropdownOpen2 && (
-                        <div className={`hidden w-48 mt-[10px] items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-start`}>
+                        <div className={`hidden w-48 lg:text-[14px] text-[12px] mt-[10px] items-center ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[#28282A]'} text-start`}>
                           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo, alias sit eum delectus itaque minima distinctio facere enim cumque accusamus!
           </div>) }
                                 </div>
                                 {
                                   show1 && (
                                     selectedImages.length < maxLimit ? (
-                                      <button onClick={() => handleAddToSet(selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3)}  className={`w-[220px] flex  mx-auto items-center justify-center gap-2.5  text-center text-2xl not-italic font-medium leading-[120%] px-5 py-[10px] rounded-[var(--sm,4px)]  mt-[25px] ${isDarkMode ? 'bg-[#454547] text-[#FFFFFFCC]' : 'bg-primary text-white'}`}>Add To Set<Image src={addSet} alt="Set"/>
+                                      <button onClick={() => handleAddToSet(selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3)}  className={`w-[220px] flex  mx-auto items-center justify-center gap-2.5  text-center text-[16px] lg:text-2xl not-italic font-medium leading-[120%] px-5 py-[10px] rounded-[var(--sm,4px)]  mt-[25px] ${isDarkMode ? 'bg-[#454547] text-[#FFFFFFCC]' : 'bg-primary text-white'}`}>Add To Set<Image src={addSet} alt="Set"/>
                                                        </button>
                                  ) : (
-                                   <button onClick={() => handleAddToSet(selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3)}  className={`w-[220px] flex  mx-auto items-center justify-center gap-2.5 text-center text-2xl not-italic cursor-not-allowed font-medium leading-[120%] px-5 py-[10px] rounded-[var(--sm,4px)] bg-opacity-[0.5] mt-[25px] ${isDarkMode ? 'bg-[#454547] text-[#FFFFFFCC]' : 'bg-primary text-white'}`}>Add To Set<Image src={addSet} alt="Set"/>
+                                   <button onClick={() => handleAddToSet(selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3)}  className={`w-[220px] flex  mx-auto items-center justify-center gap-2.5 text-center text-[16px] lg:text-2xl not-italic cursor-not-allowed font-medium leading-[120%] px-5 py-[10px] rounded-[var(--sm,4px)] bg-opacity-[0.5] mt-[25px] ${isDarkMode ? 'bg-[#454547] text-[#FFFFFFCC]' : 'bg-primary text-white'}`}>Add To Set<Image src={addSet} alt="Set"/>
                                                     </button>
                                  )
                                   )
@@ -891,10 +1056,10 @@ useEffect(() => {
 {
                                   show2 && (
                                     selectedImages.length < count  ? (
-                                      <button onClick={() => handleAddToSetOneTime(selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3)}  className={`w-[220px] flex  mx-auto items-center justify-center gap-2.5  text-center text-2xl not-italic font-medium leading-[120%] px-5 py-[10px] rounded-[var(--sm,4px)] mt-[25px] ${isDarkMode ? 'bg-[#454547] text-[#FFFFFFCC]' : 'bg-primary text-white'}`}>Add To Set<Image src={addSet} alt="Set"/>
+                                      <button onClick={() => handleAddToSetOneTime(selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3)}  className={`w-[220px] flex  mx-auto items-center justify-center gap-2.5  text-center text-[16px] lg:text-2xl not-italic font-medium leading-[120%] px-5 py-[10px] rounded-[var(--sm,4px)] mt-[25px] ${isDarkMode ? 'bg-[#454547] text-[#FFFFFFCC]' : 'bg-primary text-white'}`}>Add To Set<Image src={addSet} alt="Set"/>
                                                        </button>
                                  ) : (
-                                   <button onClick={() => handleAddToSetOneTime(selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3)}  className={`w-[220px] flex mx-auto items-center justify-center gap-2.5  text-center text-2xl not-italic cursor-not-allowed font-medium leading-[120%] px-5 py-[10px] rounded-[var(--sm,4px)] bg-opacity-[0.5] mt-[25px] ${isDarkMode ? 'bg-[#454547] text-[#FFFFFFCC]' : 'bg-primary text-white'}`}>Add To Set<Image src={addSet} alt="Set"/>
+                                   <button onClick={() => handleAddToSetOneTime(selectedButton === 1 && item.link || selectedButton === 2 && item.link2 || selectedButton === 3 && item.link3)}  className={`w-[220px] flex mx-auto items-center justify-center gap-2.5  text-center text-[16px] lg:text-2xl not-italic cursor-not-allowed font-medium leading-[120%] px-5 py-[10px] rounded-[var(--sm,4px)] bg-opacity-[0.5] mt-[25px] ${isDarkMode ? 'bg-[#454547] text-[#FFFFFFCC]' : 'bg-primary text-white'}`}>Add To Set<Image src={addSet} alt="Set"/>
                                                     </button>
                                  )
                                   )
@@ -906,19 +1071,19 @@ useEffect(() => {
                   </div>
                 </div>
                 {
-                  index === currentIndex ?  <div className="swiper-button-prev1 absolute top-[40%] left-[-25%] cursor-pointer z-[999]">
-                  <Prev color={isDarkMode ? 'white' : '#28282A'}/>
+                  index === currentIndex ?  <div className="swiper-button-prev1 absolute top-[40%] left-[5%] lg:left-[-25%] cursor-pointer z-[999]">
+                  <Prev className={`lg:h-auto lg:w-auto h-[60px] w-[50px]`} color={isDarkMode ? 'white' : '#28282A'}/>
                   {/* <Image src={prev} alt="Arrow"/> */}
-                </div> : <div className="swiper-button-prev1 opacity-0 absolute top-[40%] left-[-25%] cursor-pointer z-[999]">
+                </div> : <div className="swiper-button-prev1 opacity-0 absolute top-[40%] left-[5%] lg:left-[-25%] cursor-pointer z-[999]">
   <Prev color={isDarkMode ? 'white' : '#28282A'}/>
   {/* <Image src={prev} alt="Arrow"/> */}
 </div>
                 }
                 {
-                  index === currentIndex ?  <div className="swiper-button-next1 absolute top-[40%] right-[-25%] cursor-pointer z-[999]">
-                  <Next color={isDarkMode ? 'white' : '#28282A'}/>
+                  index === currentIndex ?  <div className="swiper-button-next1 absolute top-[40%] right-[5%] lg:right-[-25%] cursor-pointer z-[999]">
+                  <Next className={`lg:h-auto lg:w-auto h-[60px] w-[50px]`} color={isDarkMode ? 'white' : '#28282A'}/>
                   {/* <Image src={next} alt="Arrow"/> */}
-                 </div> : <div className="swiper-button-next1 opacity-0 absolute top-[40%] right-[-25%] cursor-pointer z-[999]">
+                 </div> : <div className="swiper-button-next1 opacity-0 absolute top-[40%] right-[5%] lg:right-[-25%] cursor-pointer z-[999]">
  <Next color={isDarkMode ? 'white' : '#28282A'}/>
  {/* <Image src={next} alt="Arrow"/> */}
 </div>
@@ -941,13 +1106,14 @@ useEffect(() => {
             </div>
 
     </div>
-        </div>
+          </div>
+          {/* ${show ? 'lg:fixed  bottom-0 left-0 z-[999] w-full' : 'opacity-0'} */}
         <div className={` mt-[70px] border-t-[1px]  border-opacity-[0.4] border-b-[1px] py-[30px] ${isDarkMode ? 'bg-[#28282A] border-white' : 'bg-[#F4F4F4] border-primary'}`}>
           {/* Subscribe and save */}
           {
             show3 && (
-              <div className="max-w-container mx-auto flex justify-between items-center">
-              <div className="w-[35%]">
+              <div className="lg:max-w-container mx-auto flex lg:flex-row flex-col justify-between items-center">
+              <div className="w-[35%] lg:block hidden">
                 <h3 className={`text-[32px] not-italic font-normal leading-[120%] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>Your Evoked Scents </h3>
                 <h4 className={`mt-[10px] text-xl not-italic font-normal leading-[120%] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>build your set by adding 3</h4>
                 <div className="flex items-center gap-2.5 mt-[20px]">
@@ -961,15 +1127,15 @@ useEffect(() => {
                    <span className={`text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} `}>Try first, then decide with 30d money-back promise <span className={`text-sm not-italic font-light leading-[120%] underline  cursor-pointer ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[rgba(40,40,42,0.80)] '}`}>learn more.</span></span>
                    </div>
               </div>
-              <div className={`w-[30%]  ${selectedPlan === '1 Perfume' ? 'mr-0' : 'mr-[70px]'}`}>
+              <div className={`lg:w-[30%]  ${selectedPlan === '1 Perfume' ? 'mr-0' : 'lg:mr-[70px]'}`}>
               <div className="flex gap-x-[20px] justify-center">
       {content.map((_, boxIndex) => (
-        <div key={boxIndex} className={`w-[150px] h-[150px] border  border-solid relative ${isDarkMode ? 'bg-primary border-[color:var(--black,#171717)] shadow-[2px_2px_0px_0px_rgba(255,255,255,0.70)]' : 'bg-white border-[color:var(--black,#171717)] shadow-[2px_2px_0px_0px_#171717]'}`}>
+        <div key={boxIndex} className={`lg:w-[150px] lg:h-[150px] w-[60px] h-[60px] border border-solid relative ${isDarkMode ? 'bg-primary border-[color:var(--black,#171717)] shadow-[2px_2px_0px_0px_rgba(255,255,255,0.70)]' : 'bg-white border-[color:var(--black,#171717)] shadow-[2px_2px_0px_0px_#171717]'}`}>
           {selectedImages[boxIndex] && (
         <>
-          <Image className="w-[70px] h-[108.387px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" src={selectedImages[boxIndex]} alt={`Image ${boxIndex}`} />
-              <button className="absolute top-[-10px] right-[-11px]" onClick={() => handleRemoveFromSet(boxIndex)}>
-                <Remove rect={isDarkMode ? 'white' : '#171717'} color={isDarkMode ? '#171717' : 'white'}/>
+          <Image className="lg:w-[70px] lg:h-[108.387px] w-[25px] h-[40px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" src={selectedImages[boxIndex]} alt={`Image ${boxIndex}`} />
+              <button className="absolute lg:top-[-10px] top-[-6px] right-[-8px] lg:right-[-11px]" onClick={() => handleRemoveFromSet(boxIndex)}>
+                <Remove className={`lg:w-auto lg:h-auto h-[13px] w-[13px]`} rect={isDarkMode ? 'white' : '#171717'} color={isDarkMode ? '#171717' : 'white'}/>
           </button>
         </>
       )}
@@ -978,10 +1144,10 @@ useEffect(() => {
     </div>
                  
               </div>
-              <div className="w-[35%]">
-                <div className="flex items-center gap-x-[20px]">
-                  <h6 className={`text-base not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>Deliver every:</h6>
-                  <select name="" id="" className={`px-[10px] py-[5px] bg-transparent border  rounded-[4px] outline-none ${isDarkMode ? 'border-white text-white' : 'border-[#28282A] text-[#28282A]'}`}>
+              <div className="lg:w-[35%]">
+                <div className="lg:flex items-center gap-x-[20px]">
+                  <h6 className={`text-base lg:block hidden not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>Deliver every:</h6>
+                  <select name="" id="" className={`px-[10px] lg:block hidden py-[5px] bg-transparent border  rounded-[4px] outline-none ${isDarkMode ? 'border-white text-white' : 'border-[#28282A] text-[#28282A]'}`}>
                     {options.map(({ value, label }) => (
                       <option className={`text-[color:var(--Brand,#28282A)] text-lg not-italic font-normal leading-[normal]`} key={value} value={value} selected={selectedPlan === `1 Perfume` && value === '2' || 
                       selectedPlan === `2 Perfumes` && value === '4' ||
@@ -990,14 +1156,14 @@ useEffect(() => {
                   }
                   </select>
                 </div>
-                <button className={`flex mt-[20px] w-[590px] justify-between items-center px-[30px] py-[18px] rounded-[var(--md,8px)] border  border-solid ${isDarkMode ? 'border-[color:var(--black,#171717)] shadow-[4px_4px_0px_0px_#FFF] bg-white' : 'shadow-[4px_4px_0px_0px_#171717] border-white bg-primary'}`}>
-                  <span className={` ${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[32px] not-italic font-bold leading-[120%]`}>SUBSCRIBE NOW</span>
+                <button className={`flex mt-[20px] lg:w-[590px] w-[314px] justify-between items-center px-[20px] lg:px-[30px] lg:py-[18px] py-[12px] rounded-[var(--md,8px)] border  border-solid ${isDarkMode ? 'border-[color:var(--black,#171717)] shadow-[4px_4px_0px_0px_#FFF] bg-white' : 'shadow-[4px_4px_0px_0px_#171717] border-white bg-primary'}`}>
+                  <span className={` ${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[16px] lg:text-[32px] not-italic font-bold leading-[120%]`}>SUBSCRIBE NOW</span>
                
-                  <span className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[32px] not-italic font-bold leading-[120%]`}>
+                  <span className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[16px] lg:text-[32px] not-italic font-bold leading-[120%]`}>
     {selectedPlanData && (
       <>
         {selectedPlanData.discount && (
-          <span className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-xl not-italic font-normal leading-[120%] line-through`}>
+          <span className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[10px] lg:text-xl not-italic font-normal leading-[120%] line-through`}>
             {originalPrice}
           </span>
         )}
@@ -1007,14 +1173,27 @@ useEffect(() => {
   </span>
                 </button>
               </div>
+              {/* Mobile-device */}
+              <div className="lg:w-[35%] lg:hidden block">
+                <div className="flex items-center gap-2.5 mt-[20px]">
+                   {/* <Image src={checkmart} alt="Checkmark Icon" /> */}
+                    <CheckMart color={isDarkMode ? 'white' : '#28282A'} />
+                   <span className={`text-[10px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} `}>Free 2-5d shipping & no questions asked returns</span>
+                   </div>
+                <div className="flex items-center gap-2.5 mt-[10px]">
+                   {/* <Image src={checkmart} alt="Checkmark Icon" /> */}
+                    <CheckMart color={isDarkMode ? 'white' : '#28282A'} />
+                   <span className={`text-[10px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} `}>Try first, then decide with 30d money-back promise <span className={`text-[10px] lg:text-sm not-italic font-light leading-[120%] underline  cursor-pointer ${isDarkMode ? 'text-[#FFFFFFCC]' : 'text-[rgba(40,40,42,0.80)] '}`}>learn more.</span></span>
+                   </div>
+              </div>
             </div>
             )
           }
           {/* One-time Purchase */}
           {
             show4 && (
-              <div className="max-w-container mx-auto flex justify-between gap-x-[60px] items-center">
-              <div className="w-[35%]">
+              <div className="lg:max-w-container mx-auto flex lg:flex-row flex-col justify-between gap-x-[60px] items-center">
+              <div className="lg:w-[35%] lg:block hidden">
                 <h3 className={` ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} text-[32px] not-italic font-normal leading-[120%]`}>Your Evoked Scents </h3>
                 <h4 className={`${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} mt-[10px] text-xl not-italic font-normal leading-[120%]`}>{shipping}</h4>
                 <div className="flex items-center gap-2.5 mt-[20px]">
@@ -1028,11 +1207,11 @@ useEffect(() => {
                    <span className={`text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} `}>Try first, then decide with 30d money-back promise <span className={` ${isDarkMode ? 'text-[#28282ACC]' : 'text-[rgba(40,40,42,0.80)]'} text-sm not-italic font-light leading-[120%] border-b border-b-[rgba(40,40,42,0.45)] underline  cursor-pointer`}>learn more.</span></span>
                    </div>
               </div>
-              <div className={`w-[30%] `}>
+              <div className={`lg:w-[30%] w-full `}>
                   <div className="flex gap-x-[20px] justify-center">
 
                     <Swiper
-                      className="w-full h-full swiperPadding"
+                      className="lg:w-full w-[80%] h-full swiperPadding"
                     spaceBetween={18}
                     slidesPerView={3}
                       navigation
@@ -1041,16 +1220,36 @@ useEffect(() => {
                       scrollbar={{ draggable: true }}
                       modules={[Navigation]}
                       onSlideChange={(swiper) => swiper}
+                      breakpoints={{
+                          640: {
+                            slidesPerView: 3,
+                            spaceBetween: 20,
+                            
+                        },
+                        
+                          768: {
+                            slidesPerView: 3,
+                            spaceBetween: 20,
+                          },
+                          1024: {
+                            slidesPerView: 4,
+                            spaceBetween: 20,
+                          },
+                          1920: {
+                            slidesPerView: 3,
+                            spaceBetween: 18,
+                          },
+                        }} 
                     >
 
                       {Array.from({ length: count }).map((_, boxIndex) => (
                      <SwiperSlide key={boxIndex} >
-          <div className={`w-[150px] h-[150px] border border-solid relative ${isDarkMode ? 'bg-primary border-[color:var(--black,#171717)] shadow-[2px_2px_0px_0px_rgba(255,255,255,0.70)]' : 'bg-white border-[color:var(--black,#171717)] shadow-[2px_2px_0px_0px_#171717]'} `}>
+          <div className={`lg:w-[150px] lg:h-[150px] w-[60px] h-[60px]  border border-solid relative ${isDarkMode ? 'bg-primary border-[color:var(--black,#171717)] shadow-[2px_2px_0px_0px_rgba(255,255,255,0.70)]' : 'bg-white border-[color:var(--black,#171717)] shadow-[2px_2px_0px_0px_#171717]'} `}>
           {selectedImages[boxIndex] && (
         <>
-          <Image className="w-[70px] h-[108.387px] z-[100] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" src={selectedImages[boxIndex]} alt={`Image ${boxIndex}`} />
+          <Image className="lg:w-[70px] lg:h-[108.387px] w-[25px] h-[40px] z-[100] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" src={selectedImages[boxIndex]} alt={`Image ${boxIndex}`} />
               <button className="absolute top-[-10px] right-[-11px] z-[999]" onClick={() => handleRemoveFromSetOneTime(boxIndex)}>
-                <Remove rect={isDarkMode ? 'white' : '#171717'} color={isDarkMode ? '#171717' : 'white'}/>
+                <Remove className={`lg:w-auto lg:h-auto h-[13px] w-[13px]`}  rect={isDarkMode ? 'white' : '#171717'} color={isDarkMode ? '#171717' : 'white'}/>
           </button>
         </>
                       )}
@@ -1063,23 +1262,38 @@ useEffect(() => {
     </div>
                  
               </div>
-              <div className="w-[35%]">
+              <div className="lg:w-[35%]">
                 <div className="flex items-center gap-x-[20px]">
-                  <h6 className={`${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} text-base not-italic font-normal leading-[normal]`}>Deliver within  <span className="font-bold text-[18px]">2-5 days</span></h6>
+                  <h6 className={`lg:block hidden ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} text-base not-italic font-normal leading-[normal]`}>Deliver within  <span className="font-bold text-[18px]">2-5 days</span></h6>
                    
                 </div>
-                <button className={`flex mt-[20px] w-[590px] justify-between items-center px-[30px] py-[18px] rounded-[var(--md,8px)] border border-solid ${isDarkMode ? 'border-[color:var(--black,#171717)] shadow-[4px_4px_0px_0px_#FFF] bg-white' : 'shadow-[4px_4px_0px_0px_#171717] border-white bg-primary'}`}>
-                  <span className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[32px] not-italic font-bold leading-[120%]`}>BUY NOW</span>
+                <button className={`flex mt-[20px] lg:w-[590px] w-[314px] justify-between items-center lg:px-[30px] lg:py-[18px] px-[20px] py-[12px] rounded-[var(--md,8px)] border border-solid ${isDarkMode ? 'border-[color:var(--black,#171717)] shadow-[4px_4px_0px_0px_#FFF] bg-white' : 'shadow-[4px_4px_0px_0px_#171717] border-white bg-primary'}`}>
+                  <span className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[16px] lg:text-[32px] not-italic font-bold leading-[120%]`}>BUY NOW</span>
                
                   {selectedOptions2.map((option, index) => (
-  <span key={index} className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[32px] not-italic font-bold leading-[120%]`}>
-    <span className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-xl not-italic font-normal leading-[120%] line-through`}>
+  <span key={index} className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[16px] lg:text-[32px] not-italic font-bold leading-[120%]`}>
+    <span className={`${isDarkMode ? 'text-[#28282A]' : 'text-white'} text-[10px] lg:text-xl not-italic font-normal leading-[120%] line-through`}>
       {option === "50ml" ? selector ? discount50 : null : selector ? discount : null}
     </span>
     {option === "50ml" ? rate50 : rate && rate}
   </span>
 ))}
                 </button>
+              </div>
+
+              {/* Mobile device */}
+              <div className="lg:w-[35%] lg:hidden block">
+                <h4 className={`${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} lg:mt-[10px] mt-[30px] text-[14px] lg:text-xl not-italic font-normal leading-[120%]`}>{shipping}</h4>
+                <div className="flex items-center gap-2.5 mt-[20px]">
+                   {/* <Image src={checkmart} alt="Checkmark Icon" /> */}
+                    <CheckMart color={isDarkMode ? 'white' : '#28282A'} />
+                   <span className={`text-[10px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} `}>Free 2-5d shipping & no questions asked returns</span>
+                   </div>
+                <div className="flex items-center gap-2.5 mt-[10px]">
+                   {/* <Image src={checkmart} alt="Checkmark Icon" /> */}
+                    <CheckMart color={isDarkMode ? 'white' : '#28282A'} />
+                   <span className={`text-[10px] lg:text-lg not-italic font-normal leading-[normal] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'} `}>Try first, then decide with 30d money-back promise <span className={` ${isDarkMode ? 'text-[#28282ACC]' : 'text-[rgba(40,40,42,0.80)]'} text-[10px] lg:text-sm not-italic font-light leading-[120%] border-b border-b-[rgba(40,40,42,0.45)] underline  cursor-pointer`}>learn more.</span></span>
+                   </div>
               </div>
             </div>
             )

@@ -7,22 +7,24 @@ import EvokedBrand from './evokedBrand'
 import OtherBrands from './OtherBrands'
 import Accordion from './Accordion'
 import Story from './Story'
-import EmblaSlider from './Embla'
 import Pricing from './Pricing'
+import Review from './Review'
+// import BodyComponent from '@/utils/BodyComponent'
 
 const Main = () => {
   return (
     <div>
       <DarkModeProvider>
+        {/* <BodyComponent/> */}
           <Navbar />
         <Hero />
         <Carousel />
         <EvokedBrand />
         <OtherBrands />
         <Pricing/>
-        <EmblaSlider/>
+        <Review/>
         <Story/>
-        <Accordion/>
+          <Accordion />
       </DarkModeProvider>
     </div>
   )

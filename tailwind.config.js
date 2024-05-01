@@ -15,6 +15,13 @@ module.exports = {
         'secondary': '#D2FF3A',
         'brand': '#28282A',
       },
+      backgroundImage: {
+        'evoked': 'url(../public/assets/evoked.png)',
+        'hero': 'url(../public/assets/bannerMobile.png)'
+      },
+      fontFamily:{
+        primary: ['var(--font-josefin)'],
+      },
     },
   },
   plugins: [],

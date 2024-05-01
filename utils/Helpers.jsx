@@ -1,13 +1,13 @@
-const DownArrow = ({color}) => {
+const DownArrow = ({color, className}) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M8 18L12 22M12 22L16 18M12 22V2" stroke={color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     )
   }
-const Box1 = ({color}) => {
+const Box1 = ({className, color}) => {
     return (
-      <svg width="212" height="362" viewBox="0 0 212 362" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg className={className} width="212" height="362" viewBox="0 0 212 362" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M61.244 76.7915L58.2289 154.687L-68.4031 178.922L-104.799 106.435L61.244 76.7915Z" stroke={color} stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M115.3 180.436L75.4579 187.577L58.229 154.687L61.2441 76.7915L115.3 180.436Z" stroke={color} stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M-179.098 81.3357L98.9322 31.7852L189.599 205.32L-88.4316 254.871L-179.098 81.3357ZM115.3 180.437L61.2441 76.7917L-104.584 106.435L-50.5281 210.08L115.3 180.437Z" stroke={color} stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -15,9 +15,9 @@ const Box1 = ({color}) => {
       </svg>
     )
   }
-const Box2 = ({color}) => {
+const Box2 = ({className, color}) => {
     return (
-      <svg width="243" height="385" viewBox="0 0 243 385" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg className={className} width="243" height="385" viewBox="0 0 243 385" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M283.346 81.6709L280.113 164.516L144.327 190.29L105.3 113.198L283.346 81.6709Z" stroke={color} stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M25.6292 86.5034L323.758 33.8047L420.979 218.365L122.85 271.064L25.6292 86.5034ZM341.309 191.901L283.346 81.6708L105.531 113.198L163.494 223.428L341.309 191.901Z" stroke={color} stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M420.979 218.365L417.977 301.441L119.848 353.909L122.85 271.064L420.979 218.365Z" stroke={color} stroke-width="0.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -39,16 +39,16 @@ const DownArrow2 = ({color}) => {
 </svg>
     )
   }
-const Minus = ({color}) => {
+const Minus = ({color, className}) => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="6" viewBox="0 0 15 6" fill="none">
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="15" height="6" viewBox="0 0 15 6" fill="none">
   <path d="M0 0.938965H15V5.05984H0V0.938965Z" fill={color}/>
 </svg>
     )
   }
-const Plus = ({color}) => {
+const Plus = ({color, className}) => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
   <path d="M5.80927 0.479492H9.31202V6.33114H15.04V9.66905H9.31202V15.5207H5.80927V9.66905H0.0400391V6.33114H5.80927V0.479492Z" fill={color}/>
 </svg>
     )
@@ -67,9 +67,9 @@ const Star1 = ({color}) => {
 </svg>
     )
   }
-const DownArrow1 = ({color}) => {
+const DownArrow1 = ({color, className}) => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="122" viewBox="0 0 24 122" fill="none">
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="122" viewBox="0 0 24 122" fill="none">
   <path d="M10.9393 121.061C11.5251 121.646 12.4749 121.646 13.0607 121.061L22.6066 111.515C23.1924 110.929 23.1924 109.979 22.6066 109.393C22.0208 108.808 21.0711 108.808 20.4853 109.393L12 117.879L3.51472 109.393C2.92894 108.808 1.97919 108.808 1.3934 109.393C0.807616 109.979 0.807616 110.929 1.3934 111.515L10.9393 121.061ZM10.5 6.55671e-08L10.5 120L13.5 120L13.5 -6.55671e-08L10.5 6.55671e-08Z" fill={color}/>
 </svg>
     )
@@ -81,16 +81,16 @@ const Star12 = ({color}) => {
 </svg>
     )
   }
-const Next = ({color}) => {
+const Next = ({color, className}) => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
   <path d="M48 30L33 45M48 30L33 15M48 30L13 30" stroke={color} stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
     )
   }
-const Prev = ({color}) => {
+const Prev = ({color, className}) => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
   <path d="M12 30L27 15M12 30L27 45M12 30L47 30" stroke={color} stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
     )
@@ -102,9 +102,9 @@ const Dropdown = ({color}) => {
 </svg>
     )
   }
-const Remove = ({rect, color}) => {
+const Remove = ({rect, color, className}) => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+      <svg className={className} xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
       <rect y="0.63916" width="20" height="20" rx="10" fill={rect}/>
       <path d="M13.3883 8.13485C13.4481 8.07722 13.4957 8.00828 13.5285 7.93204C13.5613 7.85581 13.5786 7.7738 13.5793 7.69081C13.5801 7.60783 13.5643 7.52552 13.5329 7.4487C13.5015 7.37187 13.4552 7.30207 13.3965 7.24336C13.3378 7.18465 13.2681 7.13821 13.1913 7.10674C13.1145 7.07528 13.0322 7.05943 12.9492 7.06011C12.8662 7.06079 12.7842 7.078 12.7079 7.11072C12.6317 7.14343 12.5627 7.19102 12.505 7.25068L10 9.75485L7.49583 7.25068C7.43861 7.18928 7.36961 7.14002 7.29295 7.10586C7.21628 7.0717 7.13352 7.05334 7.0496 7.05186C6.96568 7.05037 6.88232 7.06581 6.8045 7.09725C6.72668 7.12868 6.65598 7.17547 6.59663 7.23482C6.53728 7.29417 6.4905 7.36486 6.45906 7.44268C6.42763 7.52051 6.41219 7.60386 6.41367 7.68778C6.41515 7.7717 6.43352 7.85446 6.46768 7.93113C6.50184 8.0078 6.55109 8.0768 6.6125 8.13402L9.115 10.639L6.61083 13.1432C6.50043 13.2617 6.44033 13.4184 6.44319 13.5803C6.44604 13.7422 6.51164 13.8967 6.62615 14.0112C6.74066 14.1257 6.89514 14.1913 7.05706 14.1942C7.21898 14.197 7.37569 14.1369 7.49416 14.0265L10 11.5223L12.5042 14.0273C12.6226 14.1377 12.7793 14.1979 12.9413 14.195C13.1032 14.1921 13.2577 14.1265 13.3722 14.012C13.4867 13.8975 13.5523 13.743 13.5551 13.5811C13.558 13.4192 13.4979 13.2625 13.3875 13.144L10.885 10.639L13.3883 8.13485Z" fill={color}/>
     </svg>

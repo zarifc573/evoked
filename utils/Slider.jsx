@@ -23,16 +23,36 @@ const Slider = () => {
   ]
     return (
         <Swiper
-        slidesPerView={4}
+        
+        slidesPerView={2}
         spaceBetween={20}
             loop={true}
             allowTouchMove={true}
             scrollbar={{ draggable: true }}
             mousewheel={true}
         className="mySwiper"
+        breakpoints={{
+            640: {
+              slidesPerView: 3,
+              spaceBetween: 20,
+              
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 20,
+            },
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
+            1920: {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
+          }}
         >
             {Links.map((item) => (
-                isDarkMode ? <SwiperSlide key={item.link2}><div><Image src={item.link2}/></div></SwiperSlide>
+                isDarkMode ? <SwiperSlide  key={item.link2}><div ><Image className='lg:h-auto h-[208px]' src={item.link2}/></div></SwiperSlide>
                     :
                 <SwiperSlide key={item.link}><div><Image src={item.link}/></div></SwiperSlide>
             ))

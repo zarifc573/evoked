@@ -1,6 +1,9 @@
 import { Josefin_Sans } from "next/font/google";
 
-const josefin = Josefin_Sans({ subsets: ["latin"] });
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  variable: '--font-josefin',
+});
 
 export const metadata = {
   title: "Evoked",

@@ -3,7 +3,7 @@ import './globals.css'
 
 export default function Home() {
   return (
-    <div className="dark">
+    <div>
       <Main/>
     </div>
   );
