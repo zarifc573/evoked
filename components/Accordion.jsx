@@ -17,9 +17,9 @@ import Image from 'next/image';
 const AccordionItem = ({open, toggle, title, desc}) => {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   return (
-    <button className={`flex mb-[30px] lg:w-[690px] w-full flex-col items-start gap-x-[15px] mx-auto lg:p-[20px]  py-[15px] px-[20px] rounded-[var(--md,8px)] border  border-solid ${isDarkMode ? 'border-[color:var(--black,#fff)] bg-[#28282AB2]' : 'bg-white border-[color:var(--black,#171717)]'}`}>
+    <button onClick={toggle} className={`flex mb-[30px] lg:w-[690px] w-full flex-col items-start gap-x-[15px] mx-auto lg:p-[20px]  py-[15px] px-[20px] rounded-[var(--md,8px)] border  border-solid ${isDarkMode ? 'border-[color:var(--black,#fff)] bg-[#28282AB2]' : 'bg-white border-[color:var(--black,#171717)]'}`}>
       <div className="flex flex-col">
-      <div onClick={toggle} className={`flex justify-center gap-x-[44px] items-center cursor-pointer`}>
+      <div  className={`flex justify-center gap-x-[44px] items-center cursor-pointer`}>
         <p className={` fontFeature lg:text-[22px] text-start text-[16px] not-italic font-medium leading-[120%] lg:leading-7 ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>{title}</p>
         <div className="">
             {/* {open ? <CiSquareMinus className='text-[36px] text-[#171717]' /> : <CiSquarePlus className='text-[36px] text-[#171717]' />} */}
@@ -64,7 +64,7 @@ const Accordion = () => {
         {title:'What is Webflow and why is it the best website builder?', desc:'Vitae congue eu consequat ac felis placerat vestibulum lectus mauris ultrices. Cursus sit amet dictum sit amet justo donec enim diam porttitor lacus luctus accumsan tortor posuere.'},
     ]
   return (
-    <section className={`lg:pt-[80px] pb-[192px]  ${isDarkMode ? 'bg-[#171717]' : 'bg-white'}`}>
+    <section className={`lg:pt-[80px] lg:pb-[192px] pb-[40px]  ${isDarkMode ? 'bg-[#171717]' : 'bg-white'}`}>
       <div className="lg:max-w-container w-[90%] mx-auto">
         <div className="pb-[50px]">
 
@@ -83,7 +83,8 @@ const Accordion = () => {
           }
         </div>
         {/* Footer */}
-        <div className={`lg:w-[1398px] lg:mb-[150px] mx-auto h-[1px] ${isDarkMode ? 'bg-white' : 'bg-[#171717]'}`}>
+        {/* <div className="lg:pt-[50px] lg:mb-[150px] mb-[80px]">
+        <div className={`lg:w-[1398px]  mx-auto h-[1px] ${isDarkMode ? 'bg-white' : 'bg-[#171717]'}`}>
         <div className="flex lg:flex-row flex-col items-center justify-between pt-[15px] lg:pt-[20px]">
 
         <div className="lg:hidden block">
@@ -121,7 +122,7 @@ const Accordion = () => {
             <span className={`fontVariant text-[14px] lg:mt-0 mt-[10px] lg:text-xl not-italic font-bold leading-[140%] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>Terms & Conditions | Privacy Policy</span>
           </div>
         </div>
-       
+        </div> */}
       </div>
       
     </section>

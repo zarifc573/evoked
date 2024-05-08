@@ -9,6 +9,8 @@ import Accordion from './Accordion'
 import Story from './Story'
 import Pricing from './Pricing'
 import Review from './Review'
+import ThreeMore from './ThreeMore'
+import Footer from './Footer'
 // import BodyComponent from '@/utils/BodyComponent'
 
 const Main = () => {
@@ -20,11 +22,13 @@ const Main = () => {
         <Hero />
         <Carousel />
         <EvokedBrand />
+        <ThreeMore/>
         <OtherBrands />
         <Pricing/>
         <Review/>
         <Story/>
           <Accordion />
+          <Footer/>
       </DarkModeProvider>
     </div>
   )

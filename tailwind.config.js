@@ -8,6 +8,9 @@ module.exports = {
   theme: {
     extend: {
       maxWidth: {
+        'xxl': '1920px'
+      },
+      maxWidth: {
         'container': '1780px',
       },
       colors: {

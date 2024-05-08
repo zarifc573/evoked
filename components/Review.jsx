@@ -27,21 +27,12 @@ const Review = () => {
         
   ]
 
-// const SLIDE_COUNT = 5
-// const slides = Array.from(Array(SLIDE_COUNT).keys())
-  // const { slides, options } = props
-  // const [emblaRef, emblaApi] = useEmblaCarousel(options)
-  // useEffect(() => {
-  //   const borderStyles = document.querySelectorAll('.embla__slide');
-  //   borderStyles.forEach(borderStyle => {
-  //     isDarkMode ? borderStyle.style.border = '1px solid #fff' : borderStyle.style.border = '1px solid #171717';
-  //   });
-  // }, [isDarkMode]);
+
   return (
     <section className={`${isDarkMode ? 'bg-primary' : 'bg-white'}`} >
       <div className={`lg:pt-[100px] pt-[70px] `}>
       <h2 className={`lg:text-5xl text-[22px] w-[90%] not-italic font-bold leading-[130%] lg:leading-[normal] uppercase text-center lg:mb-[50px] mb-[40px] mx-auto ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>Hear from our <br className="lg:hidden block" /> customers</h2>
-      <div className="max-w-container mx-auto flex lg:flex-row flex-col justify-between items-center  mb-[30px]">
+      <div className="2xl:max-w-container lg:w-[90%] mx-auto flex lg:flex-row flex-col justify-between items-center  mb-[30px]">
         <div className="flex items-center gap-x-[15px]">
           <div className="flex items-center">
           <Star1 color={isDarkMode ? 'white' : '#28282A'}/>
@@ -108,16 +99,17 @@ const Review = () => {
              <div className="select-none">
                 <Image src={transform} className="object-cover w-full" alt="Image" />
                 </div>
-              <div className="flex flex-col justify-center items-start lg:gap-[52px] self-stretch px-[50px] pb-[50px]">
-                <span className={`text-5xl not-italic flex gap-x-[6px] font-bold leading-[normal] uppercase ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>
-                <Star className={`lg:w-auto lg:h-auto w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
-                <Star className={`lg:w-auto lg:h-auto w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
-                <Star className={`lg:w-auto lg:h-auto w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
-                <Star className={`lg:w-auto lg:h-auto w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
-                <Star className={`lg:w-auto lg:h-auto w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
+              <div className="flex flex-col justify-center items-start 2xl:gap-[52px] lg:gap-[35px] self-stretch px-[50px] pb-[50px]">
+                <span className={`text-5xl not-italic flex lg:gap-0 gap-x-[6px] font-bold leading-[normal] uppercase ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>
+                <Star className={`2xl:w-auto 2xl:h-auto lg:w-[40px]  w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
+                <Star className={`2xl:w-auto 2xl:h-auto lg:w-[40px]  w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
+                <Star className={`2xl:w-auto 2xl:h-auto lg:w-[40px]  w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
+                <Star className={`2xl:w-auto 2xl:h-auto lg:w-[40px]  w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
+                <Star className={`2xl:w-auto 2xl:h-auto lg:w-[40px]  w-[25px] h-[25px]`} color={isDarkMode ? 'white'  : '#2A2A28'} />
+            
                 </span>
                 <span className={`text-[18px] lg:text-[32px] lg:mt-0 mt-[20px] not-italic font-bold leading-[18px] ${isDarkMode ? 'text-white' : 'text-[color:var(--Brand,#28282A)]'}`}>Patricia O'Keefe</span>
-                <span className={`lg:w-[408px] w-[182px]  text-[12px] lg:text-[24px] not-italic lg:mt-0 mt-[10px] font-normal leading-[150%] ${isDarkMode ? 'text-white' : 'text-[#28282A]'}`}>Laborum quasi distinctio est et. Sequi omnis molestiae. Officia occaecati voluptatem accusantium. Et corrupti saepe quam.</span>
+                <span className={`2xl:w-[408px] w-[182px] lg:w-[100%]  text-[12px] lg:text-[20px] 2xl:text-[24px] not-italic lg:mt-0 mt-[10px] font-normal leading-[150%] ${isDarkMode ? 'text-white' : 'text-[#28282A]'}`}>Laborum quasi distinctio est et. Sequi omnis molestiae. Officia occaecati voluptatem accusantium. Et corrupti saepe quam.</span>
              
                
               </div>
