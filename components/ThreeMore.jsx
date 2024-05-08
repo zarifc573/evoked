@@ -8,10 +8,10 @@ import { EcoFriendly, Compostable, Perfume } from '@/utils/ThreeReasons';
 const ThreeMore = () => {
     const { isDarkMode, toggleDarkMode } = useDarkMode();
   return (
-      <section className={`lg:pb-[200px]  pb-[40px] ${isDarkMode ? 'bg-[#171717]' : 'bg-white'}`}>
+      <section className={`lg:pb-[200px] lg:pt-[200px] pb-[40px] ${isDarkMode ? 'bg-[#171717]' : 'bg-white'}`}>
        
           {/* Second Step */}
-          <div className="mx-auto lg:w-[100%] w-[90%] lg:mt-[193px] relative">
+          <div className="mx-auto lg:w-[100%] w-[90%] relative">
               <h3 className={`text-start lg:text-center lg:text-5xl text-[22px] not-italic font-bold leading-[normal] uppercase ${isDarkMode ? 'text-white' : 'text-[#28282A]'}`}>But wait, there’s more…</h3>
           
                 <div className="lg:flex lg:flex-row flex flex-col items-start justify-center lg:gap-[80px] 2xl:gap-[100px] gap-[30px]  lg:mt-[100px] mt-[40px]">
